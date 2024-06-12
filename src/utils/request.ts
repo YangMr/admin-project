@@ -8,7 +8,9 @@ import axios, {
 
 // 创建axios实例
 const service: AxiosInstance = axios.create({
-  baseURL: '',
+  //   baseURL: 'http://serverqn.9yuecloud.com',
+  //   baseURL: '/api',
+  baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 5000
 })
 
@@ -44,6 +46,26 @@ const request = <T = any>(options: AxiosRequestConfig) => {
     ...options,
     [options.method === 'GET' ? 'params' : 'data']: options.data
   })
+}
+
+// GET
+export const get = <T = any>(url: string, data: Object) => {
+  return request<T>({ url, method: 'GET', data })
+}
+
+// POST
+export const post = <T = any>(url: string, data: Object) => {
+  return request<T>({ url, method: 'POST', data })
+}
+
+// PUT
+export const put = <T = any>(url: string, data: Object) => {
+  return request<T>({ url, method: 'PUT', data })
+}
+
+// DELETE
+export const del = <T = any>(url: string, data: Object) => {
+  return request<T>({ url, method: 'DELETE', data })
 }
 
 // 导出axios实例对象
