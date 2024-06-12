@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
-import './middleware'
+import { useMiddleware } from './middleware'
 
 // 静态路由 任何用户都可以访问的页面
 // 动态路由 拥有对应权限才能访问的页面
@@ -27,9 +27,12 @@ const constantRoutes: RouteRecordRaw[] = [
       }
     ]
   },
+  // {
+  //   path: '/404',
+  //   component: () => import('@/views/404.vue')
+  // }
   {
-    path: '/404',
-    name: '404',
+    path: '/:catchAll(.*)',
     component: () => import('@/views/404.vue')
   }
 ]
@@ -41,5 +44,7 @@ const router = createRouter({
     return { top: 0 }
   }
 })
+
+useMiddleware(router)
 
 export default router

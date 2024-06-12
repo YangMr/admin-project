@@ -1,7 +1,6 @@
 <script lang="ts" setup></script>
 <template>
-  123
-  <router-view></router-view>
+  <div>test</div>
 </template>
 
 <style scoped lang="scss"></style>
