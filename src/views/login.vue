@@ -2,10 +2,15 @@
 import type { FormInstance, FormRules } from 'element-plus'
 import type { LoginDataType } from '@/api/types/loginType'
 import { login } from '@/api/login'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const store = useAuthStore()
 
 const loginForm = reactive<LoginDataType>({
-  username: '',
-  password: ''
+  username: 'admin',
+  password: 'abc12345'
 })
 
 const rules = reactive<FormRules<LoginDataType>>({
@@ -22,14 +27,9 @@ const handleLogin = () => {
       loading.value = true
 
       try {
-        const res = await login(loginForm)
-        console.log('Res=>', res)
-
-        // TODO : 存储token
-
-        // TODO : 获取用户信息 , 路由守卫
-
+        const res = await store.userLogin(loginForm)
         // TODO : 跳转到主页
+        if (res) router.push('/')
       } catch (e) {
         console.log(e)
       } finally {

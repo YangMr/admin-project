@@ -27,14 +27,14 @@ const constantRoutes: RouteRecordRaw[] = [
       }
     ]
   },
-  // {
-  //   path: '/404',
-  //   component: () => import('@/views/404.vue')
-  // }
   {
-    path: '/:catchAll(.*)',
+    path: '/404',
     component: () => import('@/views/404.vue')
   }
+  // {
+  //   path: '/:catchAll(.*)',
+  //   component: () => import('@/views/404.vue')
+  // }
 ]
 
 const router = createRouter({
