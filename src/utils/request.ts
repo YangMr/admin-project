@@ -33,7 +33,7 @@ service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const store = useAuthStore()
     if (store.token) {
-      config.headers['Authorization'] = `Bearer ${store.token}`
+      config.headers.Authorization = `Bearer ${store.token}`
     }
 
     return config

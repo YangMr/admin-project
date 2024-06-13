@@ -1,5 +1,5 @@
 // 将动态路由添加到路由表中
-import { nextTick } from 'vue'
+
 import type { RouteRecordRaw, Router } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 

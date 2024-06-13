@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { LoginDataType, ResponseUserInfoType } from '@/api/types/loginType'
 import { login, getUserInfo } from '@/api/login'

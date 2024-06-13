@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { FormInstance, FormRules } from 'element-plus'
 import type { LoginDataType } from '@/api/types/loginType'
-import { login } from '@/api/login'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 const router = useRouter()
