@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useAuthStore } from '@/stores/auth'
 import Tags from './tags.vue'
-import { useRouter } from 'vue-router'
 const store = useAuthStore()
 
 const handleCollapse = () => {
