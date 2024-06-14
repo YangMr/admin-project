@@ -8,7 +8,7 @@ import Header from './Header.vue'
       <SideBar></SideBar>
     </el-aside>
     <el-container>
-      <el-header>
+      <el-header style="height: 96px; border-bottom: 1px solid #eee">
         <Header />
       </el-header>
       <el-main>

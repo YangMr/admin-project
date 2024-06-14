@@ -13,8 +13,6 @@ const menuList = computed(() => {
 const isCollapse = computed(() => {
   return store.isCollapse
 })
-
-console.log('menuList', menuList)
 </script>
 <template>
   <div class="sidebar-wrapper" :style="{ width: isCollapse ? '60px' : '200px' }">

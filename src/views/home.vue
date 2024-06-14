@@ -7,7 +7,7 @@ const handleClick = async () => {
     // if (flag.value) return
     // flag.value = true
     const res = await test()
-    console.log('Res==>', res)
+
     // flag.value = false
   } catch (error) {
     console.log(error)
@@ -17,7 +17,6 @@ const handleClick = async () => {
 const handleRequest = async () => {
   try {
     const res = await test_err()
-    console.log('Res==>', res)
   } catch (error) {
     console.log(error)
   }

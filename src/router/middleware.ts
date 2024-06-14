@@ -22,7 +22,6 @@ Object.keys(routeFiles).forEach((routeModule: string) => {
 export const useMiddleware = (router: Router) => {
   let registerRouteFresh = true
   router.beforeEach(async (to, from, next) => {
-    console.log('to', to)
     const store = useAuthStore()
     const token = store.token
 
