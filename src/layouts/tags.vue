@@ -16,14 +16,14 @@ const addTagsList = (name: string, path: string) => {
   if (isPath != -1) return
 
   tagsList.value.push({
-    name: name,
-    path: path
+    name,
+    path
   })
 }
 
 watch(
   () => route,
-  (value) => {
+  () => {
     addTagsList(route.meta.name as string, route.path)
     activeIndex.value = route.path
   },
