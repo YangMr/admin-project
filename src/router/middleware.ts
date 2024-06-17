@@ -50,7 +50,7 @@ export const useMiddleware = (router: Router) => {
             console.log('3')
 
             if (registerRouteFresh) {
-              routeConfiguras.forEach((route: any) => {
+              routes.forEach((route: any) => {
                 router.addRoute(route)
               })
               registerRouteFresh = false
