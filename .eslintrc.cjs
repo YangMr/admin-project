@@ -18,6 +18,7 @@ module.exports = {
     'vue/multi-word-component-names': ['off'],
     eqeqeq: ['off'],
     camelcase: ['off'],
-    'no-use-before-define': ['off']
+    'no-use-before-define': ['off'],
+    'vue/valid-v-for': ['off']
   }
 }

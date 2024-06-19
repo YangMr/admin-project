@@ -23,3 +23,22 @@ export const getUserList = (data: SearchUserParamsType) => {
 export const updateUser = (data: UpdateUserType) => {
   return request<ResponseUpdateUserType>({ url: '/user/update', method: 'POST', data })
 }
+
+/**
+ * 删除用户接口
+ * @param id
+ * @returns
+ */
+export const deleteUser = (id: number) => {
+  return request<null>({ url: '/user/delete', method: 'GET', data: { id } })
+}
+
+/**
+ * 重置密码
+ * @param id
+ * @param password
+ * @returns
+ */
+export const resetPass = (id: number | string, password: number | string) => {
+  return request<null>({ url: '/user/resetPwd', method: 'POST', data: { id, password } })
+}

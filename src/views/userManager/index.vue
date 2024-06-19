@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type { List, SearchUserParamsType } from '@/api/types/userType'
-import { getUserList } from '@/api/user.ts'
+import { deleteUser, getUserList, resetPass } from '@/api/user.ts'
 import Dialog from './components/dialog.vue'
 import dayjs from 'dayjs'
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 
 const searchForm = reactive<SearchUserParamsType>({
   username: '',
@@ -58,6 +59,76 @@ const handleEdit = (row: List) => {
 
 const handleRefresh = () => {
   initUserList()
+}
+
+const handleDelete = async (id: number) => {
+  try {
+    const res = await ElMessageBox.confirm('确认删除吗？删除后内容不可恢复?', '删除', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+
+    if (res) {
+      const res = await deleteUser(id)
+      if (res.code === 200) {
+        ElMessage({ type: 'success', message: '删除成功' })
+        initUserList()
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+type DialogFormType = {
+  id: number | string
+  password: string | number
+  repassword?: string | number
+}
+const dialogFormVisible = ref(false)
+const dialogForm = ref<DialogFormType>({
+  id: '',
+  password: '',
+  repassword: ''
+})
+
+const validatePass = (rule: any, value: any, callback: any) => {
+  if (value === dialogForm.value.password) {
+    callback()
+  } else {
+    callback(new Error('两次密码输入不一致'))
+  }
+}
+const rules = reactive<FormRules<typeof dialogForm>>({
+  password: [{ required: true, message: '新密码不能为空', trigger: 'blur' }],
+  repassword: [
+    { required: true, message: '确认密码不能为空', trigger: 'blur' },
+    { validator: validatePass, trigger: 'blur' }
+  ]
+})
+
+const handleOpenDialog = (id: number | string) => {
+  dialogForm.value.id = id
+  dialogFormVisible.value = true
+}
+const dialogFormRef = ref<FormInstance>()
+const handleCancel = () => {
+  dialogFormRef.value?.resetFields()
+  dialogFormVisible.value = false
+}
+
+const handleResetPass = async () => {
+  try {
+    const res = await resetPass(dialogForm.value.id, dialogForm.value.password)
+    if (res.code === 200) {
+      ElMessage({ type: 'success', message: '重置成功' })
+      initUserList()
+      handleCancel()
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 <template>
@@ -118,10 +189,10 @@ const handleRefresh = () => {
           <template #default="scope">
             <div>
               <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-              <el-button type="danger">删除</el-button>
+              <el-button type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
             </div>
             <div class="btn-group" style="margin-top: 10px">
-              <el-button type="primary">重置密码</el-button>
+              <el-button type="primary" @click="handleOpenDialog(scope.row.id)">重置密码</el-button>
             </div>
           </template>
         </el-table-column>
@@ -141,6 +212,30 @@ const handleRefresh = () => {
     </el-card>
 
     <Dialog ref="dialogRef" @refresh="handleRefresh" />
+
+    <el-dialog v-model="dialogFormVisible" title="重置密码" width="30%">
+      <el-form
+        style="padding: 20px 0"
+        :model="dialogForm"
+        :rules="rules"
+        label-width="100px"
+        label-position="right"
+        ref="dialogFormRef"
+      >
+        <el-form-item label="新密码" prop="password">
+          <el-input v-model="dialogForm.password" type="password" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="确认密码" prop="repassword">
+          <el-input v-model="dialogForm.repassword" type="password" autocomplete="off" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="handleCancel">取消</el-button>
+          <el-button type="primary" @click="handleResetPass"> 确认 </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -148,11 +243,12 @@ const handleRefresh = () => {
 .user-wrapper {
   .search {
     margin-bottom: 20px;
+
+    .el-form-item {
+      margin-bottom: 0;
+    }
   }
 
-  .el-form-item {
-    margin-bottom: 0;
-  }
   .footer {
     margin-top: 20px;
     display: flex;

@@ -8,7 +8,7 @@ export default {
   children: [
     {
       path: 'classroom',
-      name: 'Classroom',
+      name: 'ClassRoom',
       meta: { name: '课堂训练' },
       component: () => import('@/views/trainManager/classroom.vue')
     },
