@@ -19,6 +19,7 @@ module.exports = {
     eqeqeq: ['off'],
     camelcase: ['off'],
     'no-use-before-define': ['off'],
-    'vue/valid-v-for': ['off']
+    'vue/valid-v-for': ['off'],
+    'vue/no-unused-vars': ['off']
   }
 }

@@ -2,7 +2,7 @@
 import type { List, SearchUserParamsType } from '@/api/types/userType'
 import { deleteUser, getUserList, resetPass } from '@/api/user.ts'
 import Dialog from './components/dialog.vue'
-import dayjs from 'dayjs'
+import { formatTime } from '@/utils/formatTime'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 
 const searchForm = reactive<SearchUserParamsType>({
@@ -24,10 +24,6 @@ const initUserList = async () => {
   }
 }
 initUserList()
-
-const formatTime = (value: number | string | Date) => {
-  return dayjs(value).format('YYYY-MM-DD HH:mm')
-}
 
 const handleSizeChange = (value: number) => {
   searchForm.pageSize = value
