@@ -16,4 +16,5 @@ export type ListType = {
 export type RoleParamsType = {
   pageNum: string | number
   pageSize: string | number
+  rolename: string
 }

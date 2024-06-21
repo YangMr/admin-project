@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import BaseTable from '@/components/Table/index.vue'
+import DialogModal from '@/components/DialogModal/index.vue'
 import { columnOptions } from './config/classRoomConfig'
 import { useTrain } from './hooks/useTrain'
 
@@ -7,6 +8,25 @@ const { list, total, query, initList, replaceCoverUrl, handleSizeChange, handleC
   useTrain(1)
 
 initList()
+
+const dialogModelRef = ref<InstanceType<typeof DialogModal>>()
+const ButtonType = ref<'cancel' | 'close'>('cancel')
+const uploadResource = () => {
+  ButtonType.value = 'cancel'
+  dialogModelRef.value?.open('上传资源')
+}
+
+const viewResource = () => {
+  ButtonType.value = 'close'
+  dialogModelRef.value?.open('查看资源')
+}
+
+const handleCancel = (close: Function) => {
+  close()
+}
+const handleSubmit = (close: Function) => {
+  close()
+}
 </script>
 <template>
   <div class="classroom-wrapper">
@@ -28,16 +48,24 @@ initList()
           <el-row>
             <el-col>
               <el-button link type="primary">编辑</el-button>
-              <el-button link type="primary">上传资源</el-button>
+              <el-button link type="primary" @click="uploadResource">上传资源</el-button>
             </el-col>
             <el-col style="margin-top: 10px">
               <el-button link type="danger">删除</el-button>
-              <el-button link type="danger">查看资源</el-button>
+              <el-button link type="danger" @click="viewResource">查看资源</el-button>
             </el-col>
           </el-row>
         </template>
       </BaseTable>
     </el-card>
+
+    <DialogModal
+      @cancel="handleCancel"
+      @submit="handleSubmit"
+      :type="ButtonType"
+      no-submit
+      ref="dialogModelRef"
+    ></DialogModal>
   </div>
 </template>
 
